@@ -1,13 +1,13 @@
 package ge.ibsu.demo.Controllers;
 
+import ge.ibsu.demo.DTO.AddCustomer;
 import ge.ibsu.demo.Entities.Customer;
 import ge.ibsu.demo.Services.CustomerService;
+import ge.ibsu.demo.Utils.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -25,5 +25,18 @@ public class CustomerController {
     public Customer getByID(@PathVariable Long id) throws Exception{
         return customerService.getCustomerById(id);
     }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json"})
+    public Customer add(@RequestBody AddCustomer addCustomer) throws Exception{
+        GeneralUtil.checkRequiredProperties(addCustomer, Arrays.asList("firstName", "lastName", "addressID"));
+        return customerService.add(addCustomer);
+    }
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = {"application/json"})
+    public Customer edit(@PathVariable Long id, @RequestBody AddCustomer addCustomer) throws Exception{
+        GeneralUtil.checkRequiredProperties(addCustomer, Arrays.asList("firstName", "lastName", "addressID"));
+        return customerService.edit(id, addCustomer);
+    }
+
+
 }
 
