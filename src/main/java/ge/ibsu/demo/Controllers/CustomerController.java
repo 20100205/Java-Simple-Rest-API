@@ -1,10 +1,13 @@
 package ge.ibsu.demo.Controllers;
 
 import ge.ibsu.demo.DTO.AddCustomer;
+import ge.ibsu.demo.DTO.Request.RequestData;
+import ge.ibsu.demo.DTO.SearchCustomer;
 import ge.ibsu.demo.Entities.Customer;
 import ge.ibsu.demo.Services.CustomerService;
 import ge.ibsu.demo.Utils.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -37,6 +40,9 @@ public class CustomerController {
         return customerService.edit(id, addCustomer);
     }
 
-
+    @RequestMapping(value = "/search", method = RequestMethod.POST, produces = {"application/json"})
+    public Slice<Customer> search(@RequestBody RequestData<SearchCustomer> rd) throws Exception{
+        return customerService.search(rd.getData(), rd.getPaging());
+    }
 }
 
