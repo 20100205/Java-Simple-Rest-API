@@ -33,6 +33,9 @@ public class Customer {
     @Column(name = "active")
     private Integer active;
 
+    @Column(name = "email")
+    private String email;
+
     public Long getCustomerID(){
         return customerID;
     }
@@ -87,5 +90,13 @@ public class Customer {
 
     public void setActive(Integer active) {
         this.active = active;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
